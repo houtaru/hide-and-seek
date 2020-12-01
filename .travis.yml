@@ -1,0 +1,20 @@
+sudo: false
+
+language:
+  - python
+python:
+  - 3.8
+  - 3.7
+  - 3.6
+  - 3.5
+
+install:
+  - pip install -r requirements.txt
+
+script:
+  - pycodestyle somepackage
+  - pytest --verbose --capture=no somepackage
+  - pip install .
+
+notifications:
+  email: false
