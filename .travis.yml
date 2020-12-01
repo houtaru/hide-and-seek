@@ -12,8 +12,8 @@ install:
   - pip install -r requirements.txt
 
 script:
-  - pycodestyle somepackage
-  - pytest --verbose --capture=no somepackage
+  - pycodestyle hide_and_seek
+  - pytest --verbose --capture=no hide_and_seek
   - pip install .
 
 notifications:
