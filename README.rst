@@ -4,4 +4,4 @@ Hide And Seek
 .. image:: https://travis-ci.com/houtaru/hide-and-seek.svg?branch=master
    :target: https://travis-ci.com/houtaru/hide_and_seek
 .. image:: https://img.shields.io/badge/license-MIT-blue.svg
-
+   :target: ../master/LICENSE
