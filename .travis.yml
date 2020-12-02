@@ -11,10 +11,7 @@ python:
 install:
   - pip install -r requirements.txt
 
-script:
-  - pycodestyle hide_and_seek
-  - pytest --verbose --capture=no hide_and_seek
-  - pip install .
+script: tox
 
 notifications:
   email: false
