@@ -1,3 +1,5 @@
 pycodestyle
 pytest
 pygame
+pylint
+pyyaml
