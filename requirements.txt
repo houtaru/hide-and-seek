@@ -1,5 +1,4 @@
-pycodestyle
 pytest
 pygame
-pylint
 pyyaml
+tox
