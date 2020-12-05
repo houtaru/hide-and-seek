@@ -1,14 +1,14 @@
 name: "Level 1"
 map_dir: './assets/'
-cell_size:
-  width: 30
-  height: 30
+screen_width: 512
+screen_height: 512
 line:
   thickness: 2
 FRAME_PER_SECONDS: 60
 view:
-  hider: 1
+  hider: 2
   seeker: 3
 moveable:
   hider: False
   seeker: True
+
