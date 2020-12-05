@@ -4,17 +4,11 @@ language:
   - python
 python:
   - 3.8
-  - 3.7
-  - 3.6
-  - 3.5
 
 install:
   - pip install -r requirements.txt
 
-script:
-  - pycodestyle hide_and_seek
-  - pytest --verbose --capture=no hide_and_seek
-  - pip install .
+script: tox
 
 notifications:
   email: false
