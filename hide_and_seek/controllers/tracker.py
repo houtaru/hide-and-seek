@@ -13,5 +13,13 @@ class Tracker:
     def draw(self, window, table, grid_size):
         for type in ["hider", "seeker"]:
             for player in self._players[type]:
+                player.move(
+                    3,
+                    {
+                        "x": Constants.directions[3]["x"] * grid_size,
+                        "y": Constants.directions[3]["y"] * grid_size,
+                    },
+                    Constants.screen_rect,
+                )
                 player.draw(window, len(table), len(table[0]), grid_size)
                 print(player, player._rect)

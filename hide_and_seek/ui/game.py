@@ -16,7 +16,7 @@ class Game:
             (opt["screen_width"], opt["screen_height"])
         )
         self.fps = opt["FRAME_PER_SECONDS"]
-        self.rect = Rect(0, 0, opt["screen_width"], opt["screen_height"])
+        self.rect = Constants.screen_rect
         self.table = Table(
             opt["map"],
             {"scr_wt": opt["screen_height"], "scr_ht": opt["screen_height"]},

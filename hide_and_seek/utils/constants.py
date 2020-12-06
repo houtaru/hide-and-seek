@@ -1,3 +1,7 @@
+from pygame.locals import Rect
+
+screen_rect = Rect(0, 0, opt["screen_width"], opt["screen_height"])
+
 colors = {
     "white": (255, 255, 255),
     "black": (0, 0, 0),
