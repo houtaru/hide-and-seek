@@ -11,4 +11,7 @@ view:
 moveable:
   hider: False
   seeker: True
+pushable:
+  hider: False
+  seeker: False
 
