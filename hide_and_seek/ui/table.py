@@ -86,7 +86,10 @@ class Table:
             )
 
     def moveable(self, x, y, direct):
-        dx, dy = elf._directions[direct]["x"], Constants.directionstions[direct]["y"]
+        dx, dy = (
+            Constants.directions[direct]["x"],
+            Constants.directions[direct]["y"],
+        )
         u, v = x + dx, y + dy
 
         # Check inside board
@@ -96,7 +99,7 @@ class Table:
         if self._table[u][v] == 0:
 
             # Diagonal case
-            if directions % 2 == 0:
+            if direct % 2 == 0:
                 return self._table[u][y] == 0 or self._table[x][v] == 0
 
             # Nomal case

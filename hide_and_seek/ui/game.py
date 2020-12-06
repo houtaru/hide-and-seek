@@ -3,7 +3,6 @@ import pygame
 from pygame.locals import Rect
 
 from ..ui.player import Player
-from ..controllers.tracker import Tracker
 from ..ui.table import Table
 import hide_and_seek.utils.constants as Constants
 
@@ -16,7 +15,7 @@ class Game:
             (opt["screen_width"], opt["screen_height"])
         )
         self.fps = opt["FRAME_PER_SECONDS"]
-        self.rect = Constants.screen_rect
+        self.rect = Rect(0, 0, opt["screen_width"], opt["screen_height"])
         self.table = Table(
             opt["map"],
             {"scr_wt": opt["screen_height"], "scr_ht": opt["screen_height"]},
@@ -64,7 +63,7 @@ class Game:
                             pushable=opt["pushable"]["seeker"],
                         )
                     )
-        self.tracker = Tracker(_players)
+        self._players = _players
 
     def __del__(self):
         pygame.quit()
@@ -82,8 +81,16 @@ class Game:
             # agent
             # self.draw()
 
+    def draw_players(self):
+        for type in ["hider", "seeker"]:
+            for player in self._players[type]:
+                player.draw(
+                    self.window, self.table._n, self.table._m, self.table._grid_size
+                )
+                print(player, player._rect)
+
     def draw(self):
         pygame.draw.rect(self.window, Constants.colors["white"], self.rect)
-        self.tracker.draw(self.window, self.table.get_table(), self.table._grid_size)
+        self.draw_players()
         self.table.draw(self.window)
         pygame.display.update()
