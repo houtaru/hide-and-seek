@@ -5,6 +5,9 @@ from pygame.locals import Rect
 from ..ui.player import Player
 from ..ui.table import Table
 import hide_and_seek.utils.constants as Constants
+from ..utils.rand import Rand
+
+from ..controllers.level_1 import Backtrack
 
 
 class Game:
@@ -23,47 +26,59 @@ class Game:
         )
 
         _players = {"hider": [], "seeker": []}
-        tmp_table = self.table.get_table()
-        for i in range(len(tmp_table)):
-            for j in range(len(tmp_table[i])):
-                lhs = self.table.get_pos_on_board(i, j)
-                if tmp_table[i][j] == 2:
-                    _players["hider"].append(
-                        Player(
-                            x=i,
-                            y=j,
-                            rect=Rect(
-                                lhs[0] + 1,
-                                lhs[1] + 1,
-                                self.table._grid_size["x"],
-                                self.table._grid_size["y"],
-                            ),
-                            color="blue",
-                            radius=self.table._grid_size["x"] / 3,
-                            view_range=opt["view"]["hider"],
-                            moveable=opt["moveable"]["hider"],
-                            pushable=opt["pushable"]["hider"],
-                        )
+        temp = []
+        for i in range(opt["amount"]["seeker"]):
+            x, y = Rand().get_pos(self.table.get_table())
+            self.table.update_table(x, y, 3)
+            temp.append([0, 0, 3])
+        for i in range(opt["amount"]["hider"]):
+            x, y = Rand().get_pos(self.table.get_table())
+            self.table.update_table(x, y, 2)
+            temp.append([x, y, 2])
+
+        for i, j, typ in temp:
+            lhs = self.table.get_pos_on_board(i, j)
+            if typ == 2:
+                _players["hider"].append(
+                    Player(
+                        x=i,
+                        y=j,
+                        rect=Rect(
+                            lhs[0] + 1,
+                            lhs[1] + 1,
+                            self.table._grid_size["x"],
+                            self.table._grid_size["y"],
+                        ),
+                        color="blue",
+                        radius=self.table._grid_size["x"] / 3,
+                        view_range=opt["view"]["hider"],
+                        moveable=opt["moveable"]["hider"],
+                        pushable=opt["pushable"]["hider"],
                     )
-                if tmp_table[i][j] == 3:
-                    _players["seeker"].append(
-                        Player(
-                            x=i,
-                            y=j,
-                            rect=Rect(
-                                lhs[0] + 1,
-                                lhs[1] + 1,
-                                self.table._grid_size["x"],
-                                self.table._grid_size["y"],
-                            ),
-                            color="red",
-                            radius=self.table._grid_size["x"] / 3,
-                            view_range=opt["view"]["seeker"],
-                            moveable=opt["moveable"]["seeker"],
-                            pushable=opt["pushable"]["seeker"],
-                        )
+                )
+            if typ == 3:
+                _players["seeker"].append(
+                    Player(
+                        x=i,
+                        y=j,
+                        rect=Rect(
+                            lhs[0] + 1,
+                            lhs[1] + 1,
+                            self.table._grid_size["x"],
+                            self.table._grid_size["y"],
+                        ),
+                        color="red",
+                        radius=self.table._grid_size["x"] / 3,
+                        view_range=opt["view"]["seeker"],
+                        moveable=opt["moveable"]["seeker"],
+                        pushable=opt["pushable"]["seeker"],
                     )
+                )
         self._players = _players
+        self._list_player = temp
+
+        self._result = Backtrack(self.table, self._list_player).run()
+        print(self._result)
 
     def __del__(self):
         pygame.quit()
@@ -72,14 +87,13 @@ class Game:
         running = True
         clock = pygame.time.Clock()
 
-        self.draw()
         while running:
             clock.tick(self.fps)
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     running = False
             # agent
-            # self.draw()
+            self.draw()
 
     def draw_players(self):
         for type in ["hider", "seeker"]:
@@ -87,7 +101,6 @@ class Game:
                 player.draw(
                     self.window, self.table._n, self.table._m, self.table._grid_size
                 )
-                print(player, player._rect)
 
     def draw(self):
         pygame.draw.rect(self.window, Constants.colors["white"], self.rect)

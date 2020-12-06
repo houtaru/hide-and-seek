@@ -41,6 +41,9 @@ class Table:
     def get_table(self):
         return self._table
 
+    def update_table(self, x, y, new_value):
+        self._table[x][y] = new_value
+
     def draw(self, window):
         self.draw_grids(window)
         self.draw_table(window)
@@ -93,14 +96,14 @@ class Table:
         u, v = x + dx, y + dy
 
         # Check inside board
-        if not (u >= 0 and u < self._n and v >= 0 and v <= self._m):
+        if not (u >= 0 and u < self._n and v >= 0 and v < self._m):
             return False
 
-        if self._table[u][v] == 0:
+        if self._table[u][v] not in [1, 4]:
 
             # Diagonal case
             if direct % 2 == 0:
-                return self._table[u][y] == 0 or self._table[x][v] == 0
+                return (self._table[u][y]) or (self._table[x][v] not in [1, 4])
 
             # Nomal case
             return True

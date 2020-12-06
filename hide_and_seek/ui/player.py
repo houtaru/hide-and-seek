@@ -53,7 +53,6 @@ class Player(pygame.sprite.Sprite):
             grid_size["x"] * (view_area["u"] - view_area["x"] + 1),
             grid_size["y"] * (view_area["v"] - view_area["y"] + 1),
         )
-        print(view_rect, view_area, self._pos)
         pygame.draw.rect(
             window, Constants.colors["blur_{}".format(self._color)], view_rect
         )
